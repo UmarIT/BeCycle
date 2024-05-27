@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["es2017"],
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "@assets": ["./assets"],
+      "@assets/*": ["./assets/*"],
+      "@routes": ["./routes"],
+      "@routes/*": ["./routes/*"],
+      "@screens": ["./screens"],
+      "@screens/*": ["./screens/*"],
+      "@components": ["./shared/components"],
+      "@components/*": ["./shared/components/*"],
+      "@redux": ["./shared/redux"],
+      "@redux/*": ["./shared/redux/*"],
+      "@services": ["./shared/services"],
+      "@services/*": ["./shared/services/*"],
+      "@theme": ["./shared/theme"],
+      "@theme/*": ["./shared/theme/*"],
+      "@utils": ["./shared/utils"],
+      "@utils/*": ["./shared/utils/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
+}
