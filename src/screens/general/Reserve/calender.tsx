@@ -1,156 +1,60 @@
-import {COLORS} from '@theme/colors';
-import React, {Component} from 'react';
-import {Alert, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {
-  Agenda,
-  DateData,
-  AgendaEntry,
-  AgendaSchedule,
-} from 'react-native-calendars';
-// import testIDs from '../testIDs';
+import React, {useRef} from 'react';
+import {StyleSheet} from 'react-native';
+import {ExpandableCalendar, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import testIDs from './testIDs';
+import {agendaItems, getMarkedDates} from './agendaItems';
+import {getTheme, lightThemeColor} from './theme';
 
-interface State {
-  items?: AgendaSchedule;
+const leftArrowIcon = require('./previous.png');
+const rightArrowIcon = require('./next.png');
+const ITEMS: any[] = agendaItems;
+
+interface Props {
+  weekView?: boolean;
+  onExpand?:()=>void;
 }
 
-export default class Calendar extends Component<State> {
-  state: State = {
-    items: undefined,
-  };
+const Calender = (props: Props) => {
+  const {weekView,onExpand} = props;
+  const marked = useRef(getMarkedDates());
+  const theme = useRef(getTheme());
+  return (
+    <CalendarProvider
+      date={ITEMS[1]?.title}
+    >
+      {weekView ? (
+        <WeekCalendar testID={testIDs.weekCalendar.CONTAINER} firstDay={1} markedDates={marked.current}/>
+      ) : (
+        <ExpandableCalendar
+          testID={testIDs.expandableCalendar.CONTAINER}
+          // hideKnob
+          
+          theme={theme.current}
+          onCalendarToggled={()=>onExpand()}
+          
+          firstDay={1}
+          markedDates={marked.current}
+          leftArrowImageSource={leftArrowIcon}
+          rightArrowImageSource={rightArrowIcon}
+        />
+      )}
+    </CalendarProvider>
+  );
+};
 
-  // reservationsKeyExtractor = (item, index) => {
-  //   return `${item?.reservation?.day}${index}`;
-  // };
-
-  render() {
-    return (
-      <Agenda
-        //         testID={testIDs.agenda.CONTAINER}
-        items={this.state.items}
-        //         loadItemsForMonth={this.loadItems}
-        selected={'2017-05-16'}
-        renderItem={this.renderItem}
-        renderEmptyDate={this.renderEmptyDate}
-        rowHasChanged={this.rowHasChanged}
-        showClosingKnob={true}
-        scrollEnabled={false}
-        aria-expanded={false}
-        showScrollIndicator={false}
-        // markingType={'period'}
-        // markedDates={{
-        //    '2017-05-08': {textColor: '#43515c'},
-        //    '2017-05-09': {textColor: '#43515c'},
-        //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-        //    '2017-05-21': {startingDay: true, color: 'blue'},
-        //    '2017-05-22': {endingDay: true, color: 'gray'},
-        //    '2017-05-24': {startingDay: true, color: 'gray'},
-        //    '2017-05-25': {color: 'gray'},
-        //    '2017-05-26': {endingDay: true, color: 'gray'}}}
-        // monthFormat={'yyyy'}
-        theme={{
-          calendarBackground: COLORS.WHITE,
-          agendaKnobColor: 'transparent',
-          selectedDayBackgroundColor: COLORS.orange,
-        }}
-        // renderDay={this.renderDay}
-        //         hideExtraDays={false}
-        // showOnlySelectedDayItems
-        // reservationsKeyExtractor={this.reservationsKeyExtractor}
-      />
-    );
-  }
-
-  loadItems = (day: DateData) => {
-    const items = this.state.items || {};
-
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
-
-        if (!items[strTime]) {
-          items[strTime] = [];
-
-          const numItems = Math.floor(Math.random() * 3 + 1);
-          for (let j = 0; j < numItems; j++) {
-            items[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
-              day: strTime,
-            });
-          }
-        }
-      }
-
-      const newItems: AgendaSchedule = {};
-      Object.keys(items).forEach(key => {
-        newItems[key] = items[key];
-      });
-      this.setState({
-        items: newItems,
-      });
-    }, 1000);
-  };
-
-  renderDay = day => {
-    if (day) {
-      return <Text style={styles.customDay}>{day.getDay()}</Text>;
-    }
-    return <View style={styles.dayItem} />;
-  };
-
-  renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
-    const fontSize = isFirst ? 16 : 14;
-    const color = isFirst ? 'black' : '#43515c';
-
-    return (
-      <TouchableOpacity
-        //         testID={testIDs.agenda.ITEM}
-        style={[styles.item, {height: reservation.height}]}
-        onPress={() => Alert.alert(reservation.name)}>
-        <Text style={{fontSize, color}}>{reservation.name}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  renderEmptyDate = () => {
-    return (
-      <View style={styles.emptyDate}>
-        <Text>This is empty date!</Text>
-      </View>
-    );
-  };
-
-  rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
-    return r1.name !== r2.name;
-  };
-
-  timeToString(time: number) {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
-  }
-}
+export default Calender;
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17,
+  calendar: {
+    paddingLeft: 20,
+    paddingRight: 20
   },
-  emptyDate: {
-    height: 15,
-    flex: 1,
-    paddingTop: 30,
+  header: {
+    backgroundColor: 'lightgrey'
   },
-  customDay: {
-    margin: 10,
-    fontSize: 24,
-    //     color: 'green',
-  },
-  dayItem: {
-    marginLeft: 34,
-  },
+  section: {
+    backgroundColor: lightThemeColor,
+    color: 'grey',
+    textTransform: 'capitalize'
+  }
 });

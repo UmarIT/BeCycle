@@ -1,5 +1,7 @@
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Alert, FlatList,  Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import Modal from "react-native-modal";
+
 import CustomText from '@components/CustomText';
 import {COLORS} from '@theme/colors';
 import {RF} from '@theme/responsive';
@@ -8,8 +10,11 @@ import {PRESSICON} from '@assets/icons';
 import Wrapper from '@components/Wrapper';
 import {GST} from '@theme/globalStyles';
 import Calender from './calender';
-
+import {navigate} from '@services/nav.service';
+import { ROUTES } from '@utils/routes';
+import CustomModal from '@components/CustomModal/CustomModal';
 const Reserve = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const DATA = [
     {
       id: 1,
@@ -58,7 +63,9 @@ const Reserve = () => {
       price: '$200',
     },
   ];
+  const [expand, setExpand] = useState(false)
   const RenderItem = ({item}: any) => {
+    
     return (
       <>
         <CustomText
@@ -112,7 +119,11 @@ const Reserve = () => {
               </CustomText>
             </View>
           </View>
-          <View
+          <TouchableOpacity
+          onPress={()=>{
+            // 
+            setModalVisible(true)
+          }}
             style={{
               backgroundColor: COLORS.WHITE,
               paddingVertical: RF(6),
@@ -123,7 +134,7 @@ const Reserve = () => {
             <CustomText size={11} color={COLORS.darkBlue}>
               Reservar
             </CustomText>
-          </View>
+          </TouchableOpacity>
         </View>
       </>
     );
@@ -144,14 +155,11 @@ const Reserve = () => {
       </View>
       <View
         style={{
-          // marginHorizontal: RF(20),
           marginTop: RF(10),
           width: '100%',
-          height: RF(90),
-          // justifyContent: 'center',
-          // alignItems: 'center',
+          height:expand?"44%":"20%",
         }}>
-        <Calender />
+        <Calender onExpand={()=>setExpand(!expand)} />
       </View>
       <ScrollView
         nestedScrollEnabled
@@ -171,6 +179,78 @@ const Reserve = () => {
             renderItem={({item}) => <RenderItem />}
           />
         </View>
+     
+      <CustomModal
+    
+        show={modalVisible}
+        backButton={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+       
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>¿Estás segura de querer entrar a esta lista de espera?</Text>
+
+            <View
+            style={{
+              flexDirection:"row",
+              justifyContent:"space-between",
+              alignItems:"center",
+            width:RF(170),
+            marginTop:RF(50)
+            }}
+            >
+              <TouchableOpacity
+              onPress={()=> setModalVisible(false)}
+              style={{
+                width:RF(70),
+                height:RF(30),
+                borderWidth:1,
+                borderColor:COLORS.darkBlue,
+                borderRadius:RF(20),
+                alignItems:"center",
+                justifyContent:"center"
+              }}
+              >
+                <Text
+                style={{
+                  fontSize:20,
+                  color:COLORS.darkBlue
+                }}
+                >No</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+              onPress={()=> {
+                setModalVisible(false)
+                navigate(ROUTES.CONFIRMRESERVER)
+              }}
+              style={{
+                width:RF(70),
+                height:RF(30),
+                borderWidth:1,
+                borderColor:COLORS.darkBlue,
+                backgroundColor:COLORS.darkBlue,
+                borderRadius:RF(20),
+                alignItems:"center",
+                justifyContent:"center"
+              }}
+              >
+                <Text
+                style={{
+                  fontSize:20,
+                  color:COLORS.whiteFF
+                }}
+                >Si</Text>
+              </TouchableOpacity>
+
+
+            </View>
+       
+          </View>
+    
+      </CustomModal>
+      
+  
       </ScrollView>
     </Wrapper>
   );
@@ -186,5 +266,49 @@ const styles = StyleSheet.create({
   },
   headingStyles: {
     ...GST.WEIGHT600,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    width: RF(230),
+    height: RF(180),
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignSelf:"center",
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize:24,
+    textAlign: 'center',
+    color:'#00284D'
   },
 });

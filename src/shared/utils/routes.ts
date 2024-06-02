@@ -14,7 +14,7 @@ export const ROUTES = {
   EDITPROFILE: 'EditProfile',
   FOLLOWIUP: 'FollowUp',
   PROFILEUPLOADS: 'ProfileUploads',
-
+  CONFIRMRESERVER: 'ConfirmReserver',
   CHARTS: 'Charts',
   CREATESUPPORTPLAN: 'CreateSupportPlan',
   DISCOVERSEARCHSCREEN: 'discoverSearchScreen',

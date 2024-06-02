@@ -1,4 +1,5 @@
 import {
+  Image,
   Pressable,
   StyleSheet,
   TextInput,
@@ -58,7 +59,7 @@ const CustomInput = ({
       />
       {crossIcon && text.length > 0 && (
         <Pressable style={styles.crossIcon} onPress={() => setText('')}>
-          <FastImage source={CROSS} style={styles.iconStyles} />
+          <Image source={CROSS} style={styles.iconStyles} />
         </Pressable>
       )}
     </View>

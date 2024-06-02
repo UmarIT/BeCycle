@@ -17,7 +17,9 @@ export let CLOSE = require('./close.png');
 export let FILTER = require('./filter-icon.png');
 export let MUSICICON = require('./music-icon.png');
 export let GLOBALICON = require('./global-icon.png');
-export let PRESSICON = require('./pressIcon.png');
+export let PRESSICON = require('./cycle.png');
+export let CHECKICON = require('./check-circle1.png');
+export let LOGOAPP = require('./Logo.png');
 
 export let FB = require('./socialicons/facebook.png');
 export let X = require('./socialicons/x.png');

@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {CROSS} from '@assets/images';
@@ -16,9 +16,9 @@ const CameraScreenHeader = (props: TopComponentProps) => {
   return (
     <View style={styles.mainView}>
       <TouchableOpacity onPress={onpress} style={styles.touchableView}>
-        <FastImage
+        <Image
           source={CROSS}
-          tintColor={COLORS.WHITE}
+          // tintColor={COLORS.WHITE}s
           style={styles.icon}
           resizeMode="contain"
         />

@@ -1,6 +1,5 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View,Image} from 'react-native';
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import {CROSS} from '@assets/images';
 import {RF} from '@theme/responsive';
 import {COLORS} from '@theme/colors';
@@ -17,7 +16,7 @@ const MessagesCard = (props: MessagesCardProps) => {
   return (
     <View style={styles.rowView}>
       <View style={styles.mainInnerView}>
-        <FastImage
+        <Image
           source={item?.pic}
           style={styles.profileImgStyles}
           resizeMode="cover"
@@ -70,7 +69,7 @@ const MessagesCard = (props: MessagesCardProps) => {
                 }
               }}
               icon={
-                <FastImage
+                <Image
                   resizeMode="contain"
                   source={TICK}
                   style={styles.btnIcon}
@@ -88,7 +87,7 @@ const MessagesCard = (props: MessagesCardProps) => {
                 }
               }}
               icon={
-                <FastImage
+                <Image
                   resizeMode="contain"
                   source={CROSS}
                   style={styles.btnIcon}
@@ -106,7 +105,7 @@ const MessagesCard = (props: MessagesCardProps) => {
                 }
               }}
               icon={
-                <FastImage
+                <Image
                   resizeMode="contain"
                   source={BLOCKICON}
                   style={styles.btnIcon}

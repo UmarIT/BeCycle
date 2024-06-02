@@ -1,6 +1,6 @@
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import FastImage, {Source} from 'react-native-fast-image';
+
 import {RF} from '@theme/responsive';
 interface props {
   item?: any[];
@@ -11,7 +11,7 @@ const RenderImages = (props: props) => {
     <View style={styles.rowView}>
       {item?.map((item: number | Source | undefined, index: any) => (
         <View style={styles.innerViewStyles} key={index}>
-          <FastImage
+          <Image
             source={item}
             resizeMode="cover"
             style={styles.usersIconStyles}

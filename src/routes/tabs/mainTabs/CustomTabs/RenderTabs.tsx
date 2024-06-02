@@ -5,43 +5,42 @@ import {
   HOMEICON,
   USERICON,
 } from '@assets/icons';
-import {COLORS} from '@theme/colors';
-import {RF} from '@theme/responsive';
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { COLORS } from '@theme/colors';
+import { RF } from '@theme/responsive';
+import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 function RenderTabIcon({routeName, isFocused}: any) {
   switch (routeName) {
     case 'HomeStack':
       return isFocused ? (
-        <FastImage
+        <Image
           style={styles.tabBarIconImage}
           resizeMode="contain"
-          tintColor={COLORS.darkBlue}
+          // tintColor={COLORS.darkBlue}
           source={HOMEICON}
         />
       ) : (
-        <FastImage
+        <Image
           style={styles.tabBarIconImage}
           resizeMode="contain"
-          tintColor={COLORS.GRAY}
+          // tintColor={COLORS.GRAY}
           source={HOMEICON}
         />
       );
     case 'Cart':
       return isFocused ? (
-        <FastImage
+        <Image
           style={styles.tabBarIconImage}
           resizeMode="contain"
-          tintColor={COLORS.darkBlue}
+          // tintColor={COLORS.darkBlue}
           source={CARTICON}
         />
       ) : (
         <View>
-          <FastImage
+          <Image
             style={styles.tabBarIconImage}
-            tintColor={COLORS.GRAY}
+            // tintColor={COLORS.GRAY}
             resizeMode="contain"
             source={CARTICON}
           />
@@ -50,33 +49,33 @@ function RenderTabIcon({routeName, isFocused}: any) {
 
     case 'ReserveStack':
       return isFocused ? (
-        <FastImage
+        <Image
           style={[styles.tabBarIconImage]}
           resizeMode="contain"
-          tintColor={COLORS.darkBlue}
+          // tintColor={COLORS.darkBlue}
           source={DATEICON}
         />
       ) : (
-        <FastImage
+        <Image
           style={styles.tabBarIconImage}
           resizeMode="contain"
-          tintColor={COLORS.GRAY}
+          // tintColor={COLORS.GRAY}
           source={DATEICON}
         />
       );
     case 'Profile':
       return isFocused ? (
-        <FastImage
+        <Image
           style={[styles.tabBarIconImage]}
           resizeMode="contain"
-          tintColor={COLORS.darkBlue}
+          // tintColor={COLORS.darkBlue}
           source={USERICON}
         />
       ) : (
-        <FastImage
+        <Image
           style={styles.tabBarIconImage}
           resizeMode="contain"
-          tintColor={COLORS.GRAY}
+          // tintColor={COLORS.GRAY}
           source={USERICON}
         />
       );
